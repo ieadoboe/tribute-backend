@@ -18,7 +18,7 @@ const url =
 // Database Name
 const dbName = "tributes";
 
-app.get("/", (req, res) => {
+app.get("/", (cors), (req, res) => {
   MongoClient.connect(
     url,
     { useUnifiedTopology: true },

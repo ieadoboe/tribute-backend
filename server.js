@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { response } = require("express");
 
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -20,36 +19,44 @@ const url =
 const dbName = "tributes";
 
 app.get("/", (req, res) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
-    err && console.log(err);
-    console.log("Connected successfully to server");
+  MongoClient.connect(
+    url,
+    { useUnifiedTopology: true },
+    function (err, client) {
+      err && console.log(err);
+      console.log("Connected successfully to server");
 
-    const db = client.db(dbName);
+      const db = client.db(dbName);
 
-    db.collection("tr1")
-      .find({})
-      .toArray((e, x) => {
-        console.log(x);
-        res.json(x);
-      });
+      db.collection("tr1")
+        .find({})
+        .toArray((e, x) => {
+          console.log(x);
+          res.json(x);
+        });
 
-    client.close();
-  });
+      client.close();
+    }
+  );
 });
 
 app.post("/submit", (req, res) => {
   const { name, body } = req.body;
   // Use connect method to connect to the server
-  MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
-    err && console.log(err);
-    console.log("Connected successfully to server");
+  MongoClient.connect(
+    url,
+    { useUnifiedTopology: true },
+    function (err, client) {
+      err && console.log(err);
+      console.log("Connected successfully to server");
 
-    const db = client.db(dbName);
+      const db = client.db(dbName);
 
-    console.log(db.collection("tr1").insertMany([{ name, body }]));
+      db.collection("tr1").insertMany([{ name, body }]);
 
-    client.close();
-  });
+      client.close();
+    }
+  );
 });
 
 app.listen(process.env.PORT || 5000, () => {

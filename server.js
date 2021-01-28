@@ -11,6 +11,14 @@ app.use(cors());
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 
+var corsOptions = {
+  origin: 'https://fierce-tundra-85866.herokuapp.com',
+  optionsSuccessStatus: 200,
+  methods: "GET, PUT"
+}
+
+app.use(cors(corsOptions));
+
 // Connection URL
 const url =
   "mongodb+srv://admin:tributes123@cluster0.seqic.mongodb.net/tributes?retryWrites=true&w=majority";
@@ -18,7 +26,7 @@ const url =
 // Database Name
 const dbName = "tributes";
 
-app.get("/", (cors), (req, res) => {
+app.get("/", (req, res) => {
   MongoClient.connect(
     url,
     { useUnifiedTopology: true },

@@ -17,7 +17,7 @@ var corsOptions = {
   methods: "GET, PUT"
 }
 
-app.use(cors(corsOptions));
+app.use();
 
 // Connection URL
 const url =
@@ -26,7 +26,7 @@ const url =
 // Database Name
 const dbName = "tributes";
 
-app.get("/", (req, res) => {
+app.get("/", cors(corsOptions), (req, res) => {
   MongoClient.connect(
     url,
     { useUnifiedTopology: true },
